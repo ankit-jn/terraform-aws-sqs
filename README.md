@@ -15,13 +15,13 @@ This module features the following components to be provisioned with different c
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.2.5 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.22.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.35.0 |
 
 ### Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.22.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.35.0 |
 
 ### Examples
 
@@ -58,9 +58,9 @@ Refer [Configuration Examples](https://github.com/arjstack/terraform-aws-example
 
 | Name | Description | Type | Default | Required |
 |:------|:------|:------|:------|:------:|
-| <a name="enable_sse"></a> [enable_sse](#input\_enable\_sse) | Flag to decide whether enable server-side encryption (SSE) of message content. | `bool` | `true` | no |
-| <a name="encryption_key_type"></a> [encryption_key_type](#input\_encryption\_key\_type) | Type of Encryption Key used for SSE. | `string` | `"SSE-SQS"` | no |
-| <a name="kms_master_key_id"></a> [kms_master_key_id](#input\_kms\_master\_key\_id) | The ID of an AWS-managed customer master key (CMK) for Amazon SQS or a custom CMK. | `string` | `null` | no |
+| <a name="sqs_managed_sse_enabled"></a> [sqs_managed_sse_enabled](#input\_sqs\_managed\_sse\_enabled) | Flag to decide whether enable server-side encryption (SSE) of message content with SQS-owned encryption keys. | `bool` | `true` | no |
+| <a name="kms_managed_sse_enabled"></a> [kms_managed_sse_enabled](#input\_kms\_managed\_sse\_enabled) | Flag to decide whether enable server-side encryption (SSE) of message content with KMS managed encryption keys. | `bool` | `false` | no |
+| <a name="kms_master_key_id"></a> [kms_master_key_id](#input\_kms\_master\_key\_id) | The ID of an AWS-managed customer master key (CMK) for Amazon SQS or a custom CMK. | `string` | `"alias/aws/sqs"` | no |
 | <a name="kms_data_key_reuse_period_seconds"></a> [kms_data_key_reuse_period_seconds](#input\_kms\_data\_key\_reuse\_period\_seconds) | The length of time, in seconds, for which Amazon SQS can reuse a data key to encrypt or decrypt messages before calling AWS KMS again | `number` | `300` | no |
 
 #### Queue Access Policy

@@ -65,7 +65,7 @@ variable "max_message_size" {
     default     = 262144
 
     validation {
-        condition = var.receive_wait_time_seconds >= 0 && var.receive_wait_time_seconds <= 20 
+        condition = var.max_message_size >= 0 && var.max_message_size <= 262144
         error_message = "The total bytes a message is allowed to carry, from 1024 bytes (1 KiB) upto 262144 bytes (256 KiB)."
     }
 }
@@ -104,27 +104,22 @@ variable "fifo_throughput_limit" {
 ###########################
 ## SQS Queue Encryption
 ###########################
-variable "enable_sse" {
-    description = "(Optional) Flag to decide whether enable server-side encryption (SSE) of message content."
+variable "sqs_managed_sse_enabled" {
+    description = "(Optional) Flag to decide whether enable server-side encryption (SSE) of message content with SQS-owned encryption keys."
     type        = bool
     default     = true
 }
 
-variable "encryption_key_type" {
-    description = "(Optional) Flag to decide whether enable server-side encryption (SSE) of message content."
-    type        = string
-    default     = "SSE-SQS"
-
-    validation {
-        condition = contains(["SSE-SQS", "SSE-KMS"], var.encryption_key_type)
-        error_message = "Valid Values for `encryption_key_type` are `SSE-SQS` and `SSE-KMS`."
-    }
+variable "kms_managed_sse_enabled" {
+    description = "(Optional) Flag to decide whether enable server-side encryption (SSE) of message content with KMS managed encryption keys."
+    type        = bool
+    default     = false
 }
 
 variable "kms_master_key_id" {
     description = "(Optional) The ID of an AWS-managed customer master key (CMK) for Amazon SQS or a custom CMK."
     type        = string
-    default     = null
+    default     = "alias/aws/sqs"
 }
 
 variable "kms_data_key_reuse_period_seconds" {

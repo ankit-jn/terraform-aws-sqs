@@ -17,12 +17,10 @@ resource aws_sqs_queue "this" {
     fifo_throughput_limit = var.fifo_queue ? var.fifo_throughput_limit : null
 
     ## Queue Encryption
-    sqs_managed_sse_enabled = var.enable_sse
-    
-    kms_master_key_id = (var.enable_sse 
-                            && var.encryption_key_type == "SSE-KMS") ? var.kms_master_key_id : null
-    kms_data_key_reuse_period_seconds = (var.enable_sse 
-                                            && var.encryption_key_type == "SSE-KMS") ? var.kms_data_key_reuse_period_seconds : null
+    sqs_managed_sse_enabled = var.sqs_managed_sse_enabled ? var.sqs_managed_sse_enabled : (var.kms_managed_sse_enabled ? null : var.sqs_managed_sse_enabled)
+    kms_master_key_id = var.sqs_managed_sse_enabled ? null : (var.kms_managed_sse_enabled ? var.kms_master_key_id : null)
+    kms_data_key_reuse_period_seconds = var.sqs_managed_sse_enabled ? null : (
+                                                var.kms_managed_sse_enabled ? var.kms_data_key_reuse_period_seconds : null)
 
     tags = merge({"Name" = var.name}, {"FIFO" = var.fifo_queue }, var.tags)
 
